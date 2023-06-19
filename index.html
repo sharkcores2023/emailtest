@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email API Example</title>
+</head>
+<body>
+  <h1>Email API Example</h1>
+  <input type="text" id="recipientEmail" placeholder="Recipient Email">
+  <button id="sendButton">Send Email</button>
+
+  <script>
+    function handleButtonClick() {
+      const recipient = document.getElementById('recipientEmail').value;
+      const sender = 'alexistcoolligma@gmail.com';
+      const subject = 'Test Email';
+      const messageText = 'Hello, this is a test email from SendGrid.';
+
+      const data = {
+        recipient: recipient,
+        sender: sender,
+        subject: subject,
+        messageText: messageText
+      };
+
+      fetch('http://localhost:3000/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Email sent successfully');
+          } else {
+            console.error('Error sending email:', response.statusText);
+          }
+        })
+        .catch(error => {
+          console.error('Error sending email:', error);
+        });
+    }
+
+    const button = document.getElementById('sendButton');
+    button.addEventListener('click', handleButtonClick);
+  </script>
+</body>
+</html>
